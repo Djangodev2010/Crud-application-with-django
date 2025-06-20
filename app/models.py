@@ -7,7 +7,7 @@ class Task(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100)
     description = models.CharField(max_length=400)
-    status = models.BooleanField
+    status = models.BooleanField(default=False)
     created_on = models.DateField(auto_now_add=True)
     
     def __str__(self):

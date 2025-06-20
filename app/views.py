@@ -1,7 +1,8 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .forms import *
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login 
+from django.contrib.auth import authenticate, login
+from .models import *
 
 # Create your views here.
 
@@ -52,3 +53,26 @@ def create_task_view(request):
         form = TaskForm()
     return render(request, 'create_task.html', {'form': form})
 
+@login_required
+def complete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.status = True
+    task.save()
+    return redirect('/')
+
+@login_required
+def delete_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    task.delete()
+    return redirect('/')
+
+@login_required
+def edit_task(request, task_id):
+    task = get_object_or_404(Task, id=task_id)
+    if request.method == 'POST':
+        form = TaskForm(request.POST, instance=task)
+        form.save()
+        return redirect('/')
+    else:
+        form = TaskForm(instance=task)
+    return render(request, 'edit_task.html', {'form': form})
