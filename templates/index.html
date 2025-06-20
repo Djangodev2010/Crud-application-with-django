@@ -1,5 +1,19 @@
+<h1>Your Tasks</h1><br><br>
 {% for task in tasks %}
-
-{{task.user}}
-
+<div style="background-color:#b0b3b8; padding: 10px; margin-bottom: 15px;">
+    <h2>{{ task.title }}</h2>
+    <h3>{{ task.description }}</h3>
+    <form action="#" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-success">✔ Complete</button>
+    </form>
+    <form action="#" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">🗑 Delete</button>
+    </form>
+    <form action="#" method="post" style="display: inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">✏️Edit</button>
+    </form>
+</div>
 {% endfor %}
